@@ -1,2 +1,2 @@
 # SistemasOperativos
-Tareas a realizar de sistemas operativos
+Tareas la realizar de sistemas operativos.
