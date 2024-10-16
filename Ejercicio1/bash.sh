@@ -12,7 +12,7 @@ menuRegistro() {
         then
             volver=1
         else
-            if !( grep -q "^$usuario$" "./Users.txt" || grep -q "^$usuario$" "./Admins.txt" )
+            if ! grep -Fq "$usuario:" "./Users.txt" && ! grep -Fq "$usuario:" "./Admins.txt"; 
             then
                 contrasenia=""
                 while [ "$contrasenia" != "x" ] && [ "$contrasenia" != "X" ]
@@ -82,4 +82,4 @@ registrar() {
 
 menuPrincipal
 clear
-echo "chau"
+echo "chau mundo"
