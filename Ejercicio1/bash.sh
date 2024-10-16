@@ -12,12 +12,14 @@ menuRegistro() {
         then
             volver=1
         else
-            if ! grep -Fq "$usuario:" "./Users.txt" && ! grep -Fq "$usuario:" "./Admins.txt"; 
+            verificacion= VerificarUsuario $usuario
+            verificacion=$?
+            if [ $verificacion -eq 1 ]
             then
                 contrasenia=""
                 while [ "$contrasenia" != "x" ] && [ "$contrasenia" != "X" ]
                 do
-                    echo "Ingrese su contraseña (x) para volver"
+                    echo "Ingrese su contraseña, (x) para volver"
                     read -p "-> " contrasenia
                     if [ "$contrasenia" != "x" ] && [ "$contrasenia" != "X" ] 
                     then
@@ -28,16 +30,33 @@ menuRegistro() {
                         volver=1
                     fi
                 done
-            else
-                clear
-                echo "El usuario ya existe" 
-                sleep 1
             fi
         fi
         clear
     done
 }
 
+VerificarUsuario() {
+    clear
+    valido=0
+    
+    #$1 usuario
+    if [[ $1 != "" ]] && [[ $1 != *" "* ]] && [[ $1 != *":"* ]] && [[ $1 != *"Anuar"* ]] #es una joda q>:P
+     then
+        if ! grep -Fq "$1:" "./Users.txt" && ! grep -Fq "$1:" "./Admins.txt"
+        then
+            valido=1
+        else
+            echo "Usuario ya existe"
+            sleep 1
+        fi
+    else
+        echo "Usuario inválido, el usuario no puede contener espacios o algún caracter seleccionado"
+        sleep 2
+    fi
+    
+    return $valido
+}
 
 menuPrincipal() {
     clear
@@ -69,6 +88,10 @@ menuPrincipal() {
 
 registrar() {
     
+    #$1 usuario
+    #$2 contrasenia
+    #$3 administrador o usuario
+
     archivo=""
     if [ $3 -eq 2 ] 
     then
@@ -77,6 +100,7 @@ registrar() {
         archivo="./Admins.txt"
     fi
     echo "$1:$2" >> "$archivo"
+    echo "" >> "$archivo"
     
 }
 
