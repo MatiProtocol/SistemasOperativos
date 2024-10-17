@@ -1,3 +1,1 @@
-
-gerAdmin:quelo:52080782:+900:23/12/1970
-
+admin:admin:
