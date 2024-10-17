@@ -212,7 +212,7 @@ menuRegistrarMascotas() {
                     done
                 fi
             done
-        elif [ $estadoUsuario -eq 0 ]
+        elif [ $estadoId -eq 0 ]
         then
             volver=1
         fi
