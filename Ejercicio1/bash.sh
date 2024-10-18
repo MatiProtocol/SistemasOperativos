@@ -10,10 +10,10 @@ menuRegistro() {
     do
         clear
         estadoCedula=255
-        echo "Ingrese su usuario (x) para volver"
-        read -p "-> " usuario
+        echo "Ingrese su usuario, (x) para volver"
+        read -rp "-> " usuario
 
-        estadoUsuario= verificarUser_Reg $usuario
+        verificarUser_Reg "$usuario"
         estadoUsuario=$?
 
         if [ $estadoUsuario -eq 1 ]
@@ -22,10 +22,10 @@ menuRegistro() {
             do
                 clear
                 estadoTelefono=255
-                echo "Ingrese su cédula (x) para volver"
-                read -p "-> " cedula
+                echo "Ingrese su cédula, (x) para volver"
+                read -rp "-> " cedula
 
-                estadoCedula= verificarCedula_Reg $cedula
+                verificarCedula_Reg "$cedula"
                 estadoCedula=$?
 
                 if [ $estadoCedula -eq 1 ]
@@ -34,10 +34,10 @@ menuRegistro() {
                     do
                         clear
                         estadoFecha=255
-                        echo "Ingrese su Telefono (x) para volver"
-                        read -p "-> " telefono
+                        echo "Ingrese su Telefono, (x) para volver"
+                        read -rp "-> " telefono
 
-                        estadoTelefono= verificarTel_Reg $telefono
+                        verificarTel_Reg "$telefono"
                         estadoTelefono=$?
 
                         if [ $estadoTelefono -eq 1 ]
@@ -46,10 +46,10 @@ menuRegistro() {
                             do
                                 clear
                                 estadoContrasenia=255
-                                echo "Ingrese su Fecha (x) para volver"
-                                read -p "-> " fecha
+                                echo "Ingrese su Fecha, (x) para volver"
+                                read -rp "-> " fecha
 
-                                estadoFecha= verificarFecha_Reg $fecha
+                                verificarFecha_Reg "$fecha"
                                 estadoFecha=$?
 
                                 if [ $estadoFecha -eq 1 ]
@@ -57,16 +57,16 @@ menuRegistro() {
                                     while [ $estadoContrasenia -eq 255 ]
                                     do
                                         clear
-                                        echo "Ingrese su Contrasenia (x) para volver"
-                                        read -p "-> " contrasenia
+                                        echo "Ingrese su Contrasenia, (x) para volver"
+                                        read -rp "-> " contrasenia
 
-                                        estadoContrasenia= verificarContra_Reg $contrasenia
+                                        verificarContra_Reg "$contrasenia"
                                         estadoContrasenia=$?
                                         
                                         if [ $estadoContrasenia -eq 1 ]
                                         then
 
-                                            registrar $usuario $contrasenia $1 $cedula $telefono $fecha
+                                            registrar "$usuario" "$contrasenia" "$1" "$cedula" "$telefono" "$fecha"
                                                 echo "Registrado"
                                             sleep 1
                                             volver=1
@@ -103,9 +103,9 @@ menuRegistrarMascotas() {
         clear
         estadoTipoMasc=255
         echo "Ingrese numero Identificador, (x) para volver"
-        read -p "-> " nroId
+        read -rp "-> " nroId
 
-        estadoId= verificarNroId_Reg $nroId
+        verificarNroId_Reg "$nroId"
         estadoId=$?
 
         if [ $estadoId -eq 1 ]
@@ -114,10 +114,10 @@ menuRegistrarMascotas() {
             do
                 clear
                 estadoNombMasc=255
-                echo "Ingrese El tipo de animal, (x) para volver"
-                read -p "-> " tipoMasc
+                echo "Ingrese el tipo de animal, (x) para volver"
+                read -rp "-> " tipoMasc
 
-                estadoTipoMasc= verificarCadenTexto $tipoMasc
+                verificarCadenaTexto "$tipoMasc"
                 estadoTipoMasc=$?
 
                 if [ $estadoTipoMasc -eq 1 ]
@@ -127,9 +127,9 @@ menuRegistrarMascotas() {
                         clear
                         estadoGeneroMasc=255
                         echo "Ingrese el nombre de la mascota, (x) para volver"
-                        read -p "-> " nombMasc
+                        read -rp "-> " nombMasc
 
-                        estadoNombMasc= verificarCadenTexto $nombMasc
+                        verificarCadenaTexto "$nombMasc"
                         estadoNombMasc=$?
 
                         if [ $estadoNombMasc -eq 1 ]
@@ -139,9 +139,9 @@ menuRegistrarMascotas() {
                                 clear
                                 estadoEdadMasc=255
                                 echo "Ingrese genero de la mascota: Macho o Hembra, (x) para volver"
-                                read -p "-> " generoMasc
+                                read -rp "-> " generoMasc
 
-                                estadoGeneroMasc= verificarGeneroMasc_Reg $generoMasc
+                                verificarGeneroMasc_Reg "$generoMasc"
                                 estadoGeneroMasc=$?
 
                                 if [ $estadoGeneroMasc -eq 1 ]
@@ -151,9 +151,9 @@ menuRegistrarMascotas() {
                                         clear
                                         estadoDescripcion=255
                                         echo "Ingrese edad de la mascota, (x) para volver"
-                                        read -p "-> " edadMasc
+                                        read -rp "-> " edadMasc
                                         
-                                        estadoEdadMasc= verificarEdadMasc_Reg $edadMasc
+                                        verificarEdadMasc_Reg "$edadMasc"
                                         estadoEdadMasc=$?
 
                                         if [ $estadoEdadMasc -eq 1 ]
@@ -163,9 +163,9 @@ menuRegistrarMascotas() {
                                                 clear
                                                 estadoFechaIngresoMasc=255
                                                 echo "Ingrese Descripcion de Mascota, (x) para volver"
-                                                read -p "-> " descMasc
+                                                read -rp "-> " descMasc
 
-                                                estadoDescripcion= verificarCadenTexto $descMasc
+                                                verificarCadenaTexto "$descMasc"
                                                 estadoDescripcion=$?
 
                                                 if [ $estadoDescripcion -eq 1 ]
@@ -174,14 +174,14 @@ menuRegistrarMascotas() {
                                                     do
                                                         clear
                                                         echo "Ingrese Fecha Actual (x) para volver"
-                                                        read -p "-> " fechaMasc
+                                                        read -rp "-> " fechaMasc
 
-                                                        estadoFechaIngresoMasc= verificarFecha_Reg $fechaMasc
+                                                        verificarFecha_Reg "$fechaMasc"
                                                         estadoFechaIngresoMasc=$?
 
                                                         if [ $estadoFechaIngresoMasc -eq 1 ]
                                                         then
-                                                            regMascota $nroId $tipoMasc $nombMasc $generoMasc $descMasc $fechaMasc
+                                                            regMascota "$nroId" "$tipoMasc" "$nombMasc" "$generoMasc" "$edadMasc" "$descMasc" "$fechaMasc"
                                                             echo "Se registro la mascota"
                                                             sleep 1
                                                             volver=1
@@ -224,7 +224,7 @@ verificarEdadMasc_Reg() {
 
     #$1 edad Mascota
 
-    verificacion= verificarNum $1
+    verificarNum "$1"
     verificacion=$?
 
     if [ "$1" = "x" ] || [ "$1" == "X" ]
@@ -235,6 +235,7 @@ verificarEdadMasc_Reg() {
         estado=1
     else
         echo "La edad debe contener solo números"
+        estado=-1
         sleep 1
     fi
 
@@ -245,34 +246,49 @@ verificarGeneroMasc_Reg() {
     estado=-1
 
     #$1 genero
-    
-    if [ "$1" = "x" ] || [ "$1" == "X" ]
+
+    verificarNoEspacio "$1"
+    noEspacio=$?
+
+    if [ $noEspacio -eq 1 ]
     then
-        estado=0
-    elif [ "$1" = "Macho" ] || [ "$1" = "Hembra" ]
-    then
-        estado=1
-    else
-        echo "opción invalida"
-        sleep 1
+        if [ "$1" = "x" ] || [ "$1" == "X" ]
+        then
+            estado=0
+        elif [ "$1" = "Macho" ] || [ "$1" = "Hembra" ]
+        then
+            estado=1
+        else
+            echo "opción invalida"
+            estado=-1
+            sleep 1
+        fi
     fi
     return $estado
 }
 
 
-verificarCadenTexto() {
+verificarCadenaTexto() {
     estado=-1
 
     #$1 cadena de texto
-    if [ "$1" = "x" ] || [ "$1" == "X" ]
+
+    verificarNoEspacio "$1"
+    noEspacio=$?
+
+    if [ $noEspacio -eq 1 ]
     then
-        estado=0
-    elif [[ "$1" =~ ^([a-z]|[A-Z])+$  ]] && [ ! -z $1 ]
-    then
-        estado=1
-    else
-        echo "El dato debe contener numeros ni caracteres especiales"
-        sleep 2
+        if [ "$1" = "x" ] || [ "$1" == "X" ]
+        then
+            estado=0
+        elif [[ "$1" =~ ^([a-z]|[A-Z])+$  ]] && [ ! -z "$1" ]
+        then
+            estado=1
+        else
+            echo "El dato no debe contener numeros o caracteres especiales"
+            sleep 1
+            estado=-1
+        fi
     fi
     return $estado
 }
@@ -282,7 +298,7 @@ verificarNroId_Reg() {
 
     #$1 Nro mascota
 
-    verificacion= verificarNum $1
+    verificarNum $1
     verificacion=$?
 
     if [ "$1" = "x" ] || [ "$1" == "X" ]
@@ -295,10 +311,12 @@ verificarNroId_Reg() {
             estado=1
         else
             echo "Esta Id ya se ha utilizado"
+            estado=1
             sleep 2
         fi
     else
         echo "Id invalida, tiene que tener largo 3 y debe incluir solo valores númericos"
+        estado=-1
         sleep 2
     fi
     return $estado
@@ -308,27 +326,35 @@ verificarUser_Reg() {
     estado=-1
 
     #$1 usuario
+    verificarNoEspacio "$1"
+    noEspacio=$?
+    
+    if [ $noEspacio -eq 1 ]
+    then
+        verificarNum "$1"
+        verificacion=$?
 
-    verificacion= verificarNum $1
-    verificacion=$?
-
-    if [ "$1" = "x" ] || [ "$1" = "X" ]
-    then
-        estado=0
-    elif [ $verificacion -eq 1 ]
-    then
-        echo "El usuario debe contener al menos una letra "
-        sleep 2
-    elif  [ -z "$1" ] || [[ $1 == *" "* ]] || [[ $1 == *":"* ]]
-    then
-        echo "Usuario inválido, el usuario no puede contener espacios o algún caracter seleccionado"
-        sleep 2
-    elif ! grep -q "$1:" "./Users.txt" && ! grep -q "$1:" "./Admins.txt"
-    then
-        estado=1
-    else
-        echo "Usuario ya existe"
-        sleep 1
+        if [ "$1" = "x" ] || [ "$1" = "X" ] 
+        then
+            estado=0
+        elif [ $verificacion -eq 1 ]
+        then
+            echo "El usuario debe contener al menos una letra"
+            estado=-1
+            sleep 2
+        elif [[ ! "$1" =~ ^([a-z]|[A-Z]|[0-9])+$  ]] || [  -z "$1" ]
+        then
+            echo "Usuario inválido, el usuario no debe tener caracter seleccionado"
+            estado=-1
+            sleep 2
+        elif ! grep -q "$1:" "./Users.txt" && ! grep -q "$1:" "./Admins.txt"
+        then
+            estado=1
+        else
+            echo "Usuario ya existe"
+            estado=-1
+            sleep 1
+        fi
     fi
     return $estado
 }
@@ -338,7 +364,7 @@ verificarCedula_Reg() {
 
     #$1 cedula
 
-    verificacion= verificarNum $1
+    verificarNum "$1"
     verificacion=$?
 
     if [ "$1" = "x" ] || [ "$1" == "X" ]
@@ -351,10 +377,12 @@ verificarCedula_Reg() {
             estado=1
         else
             echo "Esta cedula ya se ha utilizado"
+            estado=-1
             sleep 2
         fi
     else
-        echo "Cedula invalida, tiene que tener largo 9 y debe incluir solo valores númericos"
+        echo "Cedula invalida, tiene que tener largo 8 y debe incluir solo valores númericos"
+        estado=-1
         sleep 2
     fi
     return $estado
@@ -364,16 +392,20 @@ verificarTel_Reg() {
     estado=-1
     #$1 es el numero de Tel
 
-    if [ "$1" = "x" ] || [ "$1" = "X" ]
+    verificarNum "$1"
+    verificacion=$?
+
+    if [ "$1" = "x" ] || [ "$1" == "X" ]
     then
         estado=0
+        
+    elif [ $verificacion -eq 1 ]
+    then
+        estado=1
     else
-        verificacion= verificarNum $1
-        verificacion=$?
-        if [ $verificacion -eq 1 ]
-        then
-            estado=1
-        fi
+        echo "Telefono invalido, solo debe incluir valores númericos"
+        estado=-1
+        sleep 1
     fi
     return $estado
 }
@@ -385,7 +417,7 @@ verificarFecha_Reg() {
     if [ "$1" = "x" ] || [ "$1" = "X" ]
     then
         estado=0
-    elif [[ $1 =~ ^([0-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/(19[5-9][0-9]|20[0-1][0-9]|202[0-4])$ ]]
+    elif [[ "$1" =~ ^([0-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/(19[5-9][0-9]|20[0-1][0-9]|202[0-4])$ ]]
     then
         estado=1
     else
@@ -402,42 +434,47 @@ verificarContra_Reg() {
     if [ "$1" = "x" ] || [ "$1" = "X" ]
     then
         estado=0
+    elif [[ "$1" == *":"* ]]
+    then
+        echo "La contraseña no puede contener :."
+        sleep 1
+        estado=-1
     fi
     return $estado
 }
 
 verificarNum() {
     #$1 es la variable a verificar
-    valido=0
-    if [[ $1 =~ ^[0-9]+$ ]]
+    estado=0
+    if [[ "$1" =~ ^[0-9]+$ ]]
     then
-        valido=1
+        estado=1
     fi
-    return $valido
+    return $estado
 }
 
 
 verificarLoggeo() {
     clear
-    valido=0
+    estado=0
     
     #$1 usuario o cédula
     #$2 contrasenia
     
     if grep -q "$1:$2:" "./Admins.txt" || grep -q ":$2:$1:" "./Admins.txt"
     then
-        valido=1  
+        estado=1  
     else
         if grep -q "$1:$2:" "./Users.txt" || grep -q ":$2:$1:" "./Users.txt" 
         then
-            valido=2
+            estado=2
         else
             echo "Usuario o Contraseña incorrectos"
             sleep 1
         fi
     fi
     
-    return $valido
+    return $estado
 }
 
 registrar() {
@@ -465,43 +502,67 @@ regMascota() {
 
     #$1 nroId
     #$2 tipoMasc
-    #$3 nombMasc
+    #$3 edadMasc
     #$4 generoMasc
-    #$5 descMasc
-    #$6 fechaMasc
+    #$5 nombMasc
+    #$6 descMasc
+    #$7 fechaMasc
     
-    echo "$1-$2-$3-$4-$5-$6" >> "./MascotasAdopcion.txt"
-    echo "" >> "./MascotasAdopcion.txt"
+    echo "$1-$2-$3-$4-$5-$6-$7" >> "./MascotasAdopcion.txt"
 
 }
 
+verificarNoEspacio() {
+    estado=-1
+    if [[ "$1" == *" "* ]] || [[ "$1" == "" ]] 
+    then
+        echo "Error, la entrada contiene espacios."
+        sleep 1
+    else
+        estado=1
+    fi
+    return $estado
+}
+
 menuIniSesion() {
-    clear
     volver=0
 
     while [ $volver -eq 0 ]
     do
+        sleep 1
         clear
+        
         echo "Ingrese su nombre de Usuario o Cédula (x) para volver"
-        read -p "-> " usuario
+        read -rp "-> " usuario
+        verificarNoEspacio "$usuario"
+        noEspacio=$?
+        
+        
+        
 
-        if [ $usuario == "x" ] || [ $usuario == "X" ]
+        if [ $noEspacio -eq 1 ] 
         then
-            volver=1
-        else
-            echo "Ingrese su contraseña (x) para volver"
-            read -p "-> " contrasenia
-
-            if [ ! $contrasenia == "x" ] && [ ! $contrasenia == "X" ]
+            if [ "$usuario" == "x" ] || [ "$usuario" == "X" ]
             then
-                verificar= verificarLoggeo $usuario $contrasenia
-                verificar=$? 
-                if [ $verificar -eq 1 ]
+                volver=1
+            else
+                echo "Ingrese su contraseña (x) para volver"
+                read -rp "-> " contrasenia
+                
+                verificarNoEspacio "$contrasenia"
+                noEspacio=$?
+                
+                if [ ! "$contrasenia" == "x" ] && [ ! "$contrasenia" == "X" ] && [ $noEspacio -eq 1 ]
                 then
-                    menuAdmin
-                elif [ $verificar -eq 2 ]
-                then    
-                    menuUser
+                    verificarLoggeo "$usuario" "$contrasenia"
+                    verificar=$? 
+                    if [ $verificar -eq 1 ]
+                    then
+                        menuAdmin
+                    elif [ $verificar -eq 2 ]
+                    then    
+                        menuUser
+                    fi
                 fi
             fi
         fi
@@ -518,18 +579,18 @@ menuAdmin() {
         echo "Para registrar admin opción 2."
         echo "Para registrar mascota opción 3."
         echo "Para cerrar sesion opción 0."
-        read -p "-> " opcion
+        read -rp "-> " opcion
 
         case $opcion in
         0)
             volver=1
         ;;
         1)
-            menuRegistro $opcion
+            menuRegistro "$opcion"
             volver=0
         ;;
         2)
-            menuRegistro $opcion
+            menuRegistro "$opcion"
             volver=0
         ;;
         3)
@@ -545,6 +606,91 @@ menuAdmin() {
     done
 }
 
+listarMascotas() {
+    clear
+    cat "./MascotasAdopcion.txt"
+    volver=0
+    while [ $volver -eq 0 ]
+    do
+        echo ""
+        echo "(x) para salir"
+        read -rp "-> " salirLstMasc
+        if [ "$salirLstMasc" == "x" ] || [ "$salirLstMasc" == "X" ]
+        then
+            volver=1
+        else
+            clear
+            cat "./MascotasAdopcion.txt"
+        fi
+    done
+    return $volver
+}
+
+obtenerFechaActual(){
+    date +"%Y-%m-%d"    
+}
+
+verifId(){
+    
+    estado=-1
+    verificarNum $1
+    valido=$?
+    if grep -q "^"$id"" "./MascotasAdopcion.txt" && [ $valido -eq 1 ]
+    then
+        estado=1
+    fi
+    return $estado
+}
+
+adoptarMascota(){
+    volver=0
+    clear
+    echo "Escriba el id de la mascota. (x) para volver"
+    read -rp "-> " id
+    verifId "$id"
+    idValido=$?
+
+    echo "$idValido"
+    sleep 3
+    
+    while [ $volver -eq 0 ]
+    do
+        if [ "$id" == "x" ] || [ "$id" == "X" ]
+        then
+            volver=1
+
+        elif [ $idValido -eq 1 ]
+        then
+            id="$id-"   
+            linea=$(grep "^"$id"" "./MascotasAdopcion.txt")
+            echo "$linea"
+            sleep 3
+            if [ ! -z "$linea" ]  
+            then
+                fecha= date +"%d/%m/%Y"
+                echo $fecha
+                lineaAdoptado=$(echo "$linea" | sed -e "s@[0-9]{2}/[0-9]{2}/[0-9]{4}\$@$fecha@") #####ROMPECULOSSSSSSS
+
+                sed -i "/^$id/d" "./MascotasAdopcion.txt"
+                echo "$lineaAdoptado"
+                echo $lineaAdoptado >> "./MascotasAdoptadas.txt"
+                echo "HOYSOYYOL"
+                sleep 3
+                voler=1
+            else
+                echo "Mascota no encontrada"
+                sleep 1
+                clear
+                echo "Escriba el id de la mascota. (x) para volver"
+                read -rp "-> " id
+                verifId "$id"
+                idValido=$?
+            fi
+        fi
+    done
+    return $volver
+}
+
 menuUser() {
     volver=0
 
@@ -554,18 +700,18 @@ menuUser() {
         echo "Para listar mascotas en adopción opción 1."
         echo "Para adoptar mascota opción 2."
         echo "Para cerrar sesion opción 0."
-        read -p "-> " opcion
+        read -rp "-> " opcion
 
         case $opcion in
         0)
             volver=1
         ;;
         1)
-            menuRegistro $opcion
+            listarMascotas
             volver=0
         ;;
         2)
-            menuRegistro $opcion
+            adoptarMascota "$opcion"
             volver=0
         ;;
         3)
@@ -589,7 +735,7 @@ menuPrincipal() {
         clear
         echo "Para iniciar sesion opción 1."
         echo "Para salir opción 0."
-        read -p "-> " opcion
+        read -rp "-> " opcion
 
         case $opcion in
         0)
