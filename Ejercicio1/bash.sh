@@ -642,53 +642,39 @@ verifId(){
     return $estado
 }
 
-adoptarMascota(){
+adoptarMascota() {
     volver=0
-    clear
-    echo "Escriba el id de la mascota. (x) para volver"
-    read -rp "-> " id
-    verifId "$id"
-    idValido=$?
-
-    echo "$idValido"
-    sleep 3
     
     while [ $volver -eq 0 ]
     do
+        clear
+        echo "Escriba el id de la mascota. (x) para volver"
+        read -rp "-> " id
+        verifId "$id"
+        idValido=$?
+
         if [ "$id" == "x" ] || [ "$id" == "X" ]
         then
             volver=1
-
         elif [ $idValido -eq 1 ]
         then
             id="$id-"   
             linea=$(grep "^"$id"" "./MascotasAdopcion.txt")
-            echo "$linea"
             sleep 3
             if [ ! -z "$linea" ]  
             then
-                fecha= date +"%d/%m/%Y"
-                echo $fecha
-                lineaAdoptado=$(echo "$linea" | sed -e "s@[0-9]{2}/[0-9]{2}/[0-9]{4}\$@$fecha@") #####ROMPECULOSSSSSSS
-
+                fecha=$(date +"%d/%m/%Y")
+                lineaAdoptado=$(echo "$linea" | sed -E "s@[0-9]{2}/[0-9]{2}/[0-9]{4}\$@$fecha@")
                 sed -i "/^$id/d" "./MascotasAdopcion.txt"
-                echo "$lineaAdoptado"
                 echo $lineaAdoptado >> "./MascotasAdoptadas.txt"
-                echo "HOYSOYYOL"
-                sleep 3
-                voler=1
+                echo "Adopcion Completada!!"
+                sleep 1
             else
                 echo "Mascota no encontrada"
                 sleep 1
-                clear
-                echo "Escriba el id de la mascota. (x) para volver"
-                read -rp "-> " id
-                verifId "$id"
-                idValido=$?
             fi
         fi
     done
-    return $volver
 }
 
 menuUser() {
