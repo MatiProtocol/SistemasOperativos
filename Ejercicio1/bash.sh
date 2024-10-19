@@ -161,7 +161,6 @@ menuRegistrarMascotas() {
                                             while [ $estadoDescripcion -eq 255 ]
                                             do
                                                 clear
-                                                estadoFechaIngresoMasc=255
                                                 echo "Ingrese Descripcion de Mascota, (x) para volver"
                                                 read -rp "-> " descMasc
 
@@ -170,26 +169,10 @@ menuRegistrarMascotas() {
 
                                                 if [ $estadoDescripcion -eq 1 ]
                                                 then
-                                                    while [ $estadoFechaIngresoMasc -eq 255 ]
-                                                    do
-                                                        clear
-                                                        echo "Ingrese Fecha Actual (x) para volver"
-                                                        read -rp "-> " fechaMasc
-
-                                                        verificarFecha_Reg "$fechaMasc"
-                                                        estadoFechaIngresoMasc=$?
-
-                                                        if [ $estadoFechaIngresoMasc -eq 1 ]
-                                                        then
-                                                            regMascota "$nroId" "$tipoMasc" "$nombMasc" "$generoMasc" "$edadMasc" "$descMasc" "$fechaMasc"
-                                                            echo "Se registro la mascota"
-                                                            sleep 1
-                                                            volver=1
-                                                        elif [ $estadoFechaIngresoMasc -eq 0 ]
-                                                        then
-                                                            estadoDescripcion=255
-                                                        fi
-                                                    done
+                                                    regMascota "$nroId" "$tipoMasc" "$nombMasc" "$generoMasc" "$edadMasc" "$descMasc"
+                                                    echo "Se registro la mascota"
+                                                    sleep 1
+                                                    volver=1
                                                 elif [ $estadoGeneroMasc -eq 0 ]
                                                 then
                                                     estadoDescripcion=255
@@ -224,7 +207,7 @@ verificarEdadMasc_Reg() {
 
     #$1 edad Mascota
 
-    verificarNum "$1"
+    verificarNumPos "$1"
     verificacion=$?
 
     if [ "$1" = "x" ] || [ "$1" == "X" ]
@@ -232,7 +215,14 @@ verificarEdadMasc_Reg() {
         estado=0
     elif [ $verificacion -eq 1 ]
     then
-        estado=1
+        if [ $1 -gt 0 ]
+        then
+            estado=1
+        else
+            estado=-1
+            echo " La edad debe ser mayor a 0 "
+            sleep 1
+        fi
     else
         echo "La edad debe contener solo números"
         estado=-1
@@ -255,7 +245,7 @@ verificarGeneroMasc_Reg() {
         if [ "$1" = "x" ] || [ "$1" == "X" ]
         then
             estado=0
-        elif [ "$1" = "Macho" ] || [ "$1" = "Hembra" ]
+        elif [ "$1" = "Macho" ] || [ "$1" = "Hembra" ] || [ "$1" = "macho" ] || [ "$1" = "hembra" ]
         then
             estado=1
         else
@@ -298,7 +288,7 @@ verificarNroId_Reg() {
 
     #$1 Nro mascota
 
-    verificarNum $1
+    verificarNumPos $1
     verificacion=$?
 
     if [ "$1" = "x" ] || [ "$1" == "X" ]
@@ -306,16 +296,23 @@ verificarNroId_Reg() {
         estado=0
     elif [ $verificacion -eq 1 ] && [ ${#1} -eq 3 ]
     then
-        if ! grep -q "^$1-" "./MascotasAdopcion.txt"
+        if [ "$1" == "000" ]
         then
-            estado=1
+            estado=-1
+            echo " El Id no puede ser 000 "
+            sleep 1
         else
-            echo "Esta Id ya se ha utilizado"
-            estado=1
-            sleep 2
+            if ! grep -q "^$1-" "./MascotasAdopcion.txt"
+            then
+                estado=1
+            else
+                estado=-1
+                echo "Este Id ya se ha utilizado"
+                sleep 2
+            fi
         fi
     else
-        echo "Id invalida, tiene que tener largo 3 y debe incluir solo valores númericos"
+        echo "Id invalida, tiene que tener largo 3 y debe incluir solo valores númericos. Ej: 001"
         estado=-1
         sleep 2
     fi
@@ -331,7 +328,7 @@ verificarUser_Reg() {
     
     if [ $noEspacio -eq 1 ]
     then
-        verificarNum "$1"
+        verificarNumPos "$1"
         verificacion=$?
 
         if [ "$1" = "x" ] || [ "$1" = "X" ] 
@@ -364,7 +361,7 @@ verificarCedula_Reg() {
 
     #$1 cedula
 
-    verificarNum "$1"
+    verificarNumPos "$1"
     verificacion=$?
 
     if [ "$1" = "x" ] || [ "$1" == "X" ]
@@ -392,7 +389,7 @@ verificarTel_Reg() {
     estado=-1
     #$1 es el numero de Tel
 
-    verificarNum "$1"
+    verificarNumPos "$1"
     verificacion=$?
 
     if [ "$1" = "x" ] || [ "$1" == "X" ]
@@ -443,7 +440,7 @@ verificarContra_Reg() {
     return $estado
 }
 
-verificarNum() {
+verificarNumPos() {
     #$1 es la variable a verificar
     estado=0
     if [[ "$1" =~ ^[0-9]+$ ]]
@@ -506,9 +503,12 @@ regMascota() {
     #$4 generoMasc
     #$5 nombMasc
     #$6 descMasc
-    #$7 fechaMasc
     
-    echo "$1-$2-$3-$4-$5-$6-$7" >> "./MascotasAdopcion.txt"
+    fecha=$(date +"%d/%m/%Y")
+
+    nombMinsculas=$(echo "$2" | tr '[:upper:]' '[:lower:]')
+    generoMinusculas=$(echo "$4" | tr '[:upper:]' '[:lower:]')
+    echo "$1-$nombMinsculas-$3-$generoMinusculas-$5-$6-$fecha" >> "./MascotasAdopcion.txt"
 
 }
 
@@ -529,7 +529,6 @@ menuIniSesion() {
 
     while [ $volver -eq 0 ]
     do
-        sleep 1
         clear
         
         echo "Ingrese su nombre de Usuario o Cédula (x) para volver"
@@ -626,14 +625,10 @@ listarMascotas() {
     return $volver
 }
 
-obtenerFechaActual(){
-    date +"%Y-%m-%d"    
-}
-
-verifId(){
+verifId() {
     
     estado=-1
-    verificarNum $1
+    verificarNumPos $1
     valido=$?
     if grep -q "^"$id"" "./MascotasAdopcion.txt" && [ $valido -eq 1 ]
     then
@@ -660,7 +655,6 @@ adoptarMascota() {
         then
             id="$id-"   
             linea=$(grep "^"$id"" "./MascotasAdopcion.txt")
-            sleep 3
             if [ ! -z "$linea" ]  
             then
                 fecha=$(date +"%d/%m/%Y")
