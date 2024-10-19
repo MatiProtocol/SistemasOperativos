@@ -173,9 +173,9 @@ menuRegistrarMascotas() {
                                                     echo "Se registro la mascota"
                                                     sleep 1
                                                     volver=1
-                                                elif [ $estadoGeneroMasc -eq 0 ]
+                                                elif [ $estadoDescripcion -eq 0 ]
                                                 then
-                                                    estadoDescripcion=255
+                                                    estadoEdadMasc=255
                                                 fi
                                             done
                                         elif [ $estadoEdadMasc -eq 0 ]
@@ -213,18 +213,18 @@ verificarEdadMasc_Reg() {
     if [ "$1" = "x" ] || [ "$1" == "X" ]
     then
         estado=0
-    elif [ $verificacion -eq 1 ]
+    elif [[ "$1" =~ ^[1-9]+$ ]] || [[ "$1" =~ ^[1-9][0-9]+$ ]]
     then
-        if [ $1 -gt 0 ]
+        if [ $1 -gt 1 ]
         then
             estado=1
         else
             estado=-1
-            echo " La edad debe ser mayor a 0 "
+            echo "La edad debe ser mayor a 1 "
             sleep 1
         fi
     else
-        echo "La edad debe contener solo números"
+        echo "La edad debe contener solo números sin ceros en la izquierda"
         estado=-1
         sleep 1
     fi
@@ -339,7 +339,7 @@ verificarUser_Reg() {
             echo "El usuario debe contener al menos una letra"
             estado=-1
             sleep 2
-        elif [[ ! "$1" =~ ^([a-z]|[A-Z]|[0-9])+$  ]] || [  -z "$1" ]
+        elif [[ ! "$1" =~ ^([a-z]|[A-Z]|[0-9])+$ ]] || [  -z "$1" ]
         then
             echo "Usuario inválido, el usuario no debe tener caracter seleccionado"
             estado=-1
@@ -495,6 +495,112 @@ registrar() {
 }
 
 
+menuEstadisticas() {
+    clear
+    volver=0
+    while [ $volver -eq 0 ]
+    do
+        vals=$(awk '{print $1}' "./MascotasAdoptadas.txt")
+        if [ ! -z "$vals" ]
+        then
+            promedioEdadMescota
+            echo ""
+            mesMasAdoptadas
+            echo ""
+            promedioTipoNombMascota
+        else
+            echo "No hay animales adoptados aún."
+        fi
+        
+        echo ""
+        echo "(x) para volver atrás." 
+        read -rp "-> " atras
+        if [ "$atras" == "x" ] || [ "$atras" == "X" ]
+        then    
+            volver=1
+        fi
+    done
+    return $volver   
+}
+
+mesMasAdoptadas() {
+    meses=$(awk -F'/' '{print $2}' "./MascotasAdoptadas.txt")
+    if [ ! -z "$meses" ]
+    then
+        declare -A contador_meses
+
+        for mes in $meses
+        do
+            ((contador_meses[$mes]++))
+        done
+
+        max_frecuencia=0
+        mes_mas_frecuente=""
+
+        for mes in "${!contador_meses[@]}"
+        do
+            if (( contador_meses[$mes] > max_frecuencia ))
+            then
+                max_frecuencia=${contador_meses[$mes]}
+                mes_mas_frecuente=$mes
+            fi
+        done
+        echo "El mes mas frecuente es: " "$mes_mas_frecuente"
+    fi
+    
+}
+
+promedioTipoNombMascota() {
+
+
+    tiposAdoptados=$(awk -F'-' '{print $2}' "./MascotasAdoptadas.txt")
+    tiposAdopcion=$(awk -F'-' '{print $2}' "./MascotasAdopcion.txt")
+    tipoTotalSinRep=$(echo "$tiposAdoptados"$'\n'"$tiposAdopcion" | sort | uniq)
+    tipoTotalConRep=$(echo "$tiposAdoptados"$'\n'"$tiposAdopcion")
+
+
+    totalGeneral=0
+    totalAdoptados=0
+
+    for tipo in $tipoTotalSinRep
+    do
+        for tipoAux in $tipoTotalConRep
+        do
+            if [ $tipo == $tipoAux ]
+            then
+                totalGeneral=$((totalGeneral + 1 ))
+            fi
+        done
+
+        for tipoAux in $tiposAdoptados
+        do
+            if [ $tipo == $tipoAux ]
+            then
+                totalAdoptados=$((totalAdoptados + 1 ))
+            fi
+        done
+        echo "El porcentaje de $tipo adoptados es de: "$((((totalAdoptados * 100) / totalGeneral)))"%"
+        totalGeneral=0
+        totalAdoptados=0
+    done
+
+}
+
+promedioEdadMescota() {
+    
+    vals=$(awk -F'-' '{print $5}' "./MascotasAdoptadas.txt")
+    if [ ! -z "$vals" ]
+    then
+        i=0
+        for val in $vals
+        do
+            i=$((i + 1))
+            sumaEdad=$((sumaEdad + val))
+        done
+        echo "Promedio de los animales adoptados: " $((sumaEdad / i))
+    fi
+}
+
 regMascota() {
 
     #$1 nroId
@@ -577,7 +683,8 @@ menuAdmin() {
         echo "Para registrar usuario opción 1."
         echo "Para registrar admin opción 2."
         echo "Para registrar mascota opción 3."
-        echo "Para cerrar sesion opción 0."
+        echo "Para ver estadísticas de las adopciones opción 4."
+        echo "Para cerrar sesión opción 0."
         read -rp "-> " opcion
 
         case $opcion in
@@ -594,6 +701,10 @@ menuAdmin() {
         ;;
         3)
             menuRegistrarMascotas
+            volver=0
+        ;;
+        4)
+            menuEstadisticas
             volver=0
         ;;
         *)
@@ -658,7 +769,7 @@ adoptarMascota() {
             if [ ! -z "$linea" ]  
             then
                 fecha=$(date +"%d/%m/%Y")
-                lineaAdoptado=$(echo "$linea" | sed -E "s@[0-9]{2}/[0-9]{2}/[0-9]{4}\$@$fecha@")
+                lineaAdoptado=$(echo "$linea" | sed -r "s@[0-9]{2}/[0-9]{2}/[0-9]{4}\$@$fecha@")
                 sed -i "/^$id/d" "./MascotasAdopcion.txt"
                 echo $lineaAdoptado >> "./MascotasAdoptadas.txt"
                 echo "Adopcion Completada!!"
