@@ -10,7 +10,7 @@ menuRegistro() {
     do
         clear
         estadoCedula=255
-        echo "Ingrese su usuario, (x) para volver"
+        echo "Ingrese el usuario, (x) para volver"
         read -rp "-> " usuario
 
         verificarUser_Reg "$usuario"
@@ -22,7 +22,7 @@ menuRegistro() {
             do
                 clear
                 estadoTelefono=255
-                echo "Ingrese su cédula, (x) para volver"
+                echo "Ingrese la cédula, (x) para volver"
                 read -rp "-> " cedula
 
                 verificarCedula_Reg "$cedula"
@@ -34,7 +34,7 @@ menuRegistro() {
                     do
                         clear
                         estadoFecha=255
-                        echo "Ingrese su Telefono, (x) para volver"
+                        echo "Ingrese el Telefono, (x) para volver"
                         read -rp "-> " telefono
 
                         verificarTel_Reg "$telefono"
@@ -46,7 +46,7 @@ menuRegistro() {
                             do
                                 clear
                                 estadoContrasenia=255
-                                echo "Ingrese su Fecha, (x) para volver"
+                                echo "Ingrese la Fecha de nacimiento, (x) para volver"
                                 read -rp "-> " fecha
 
                                 verificarFecha_Reg "$fecha"
@@ -57,7 +57,7 @@ menuRegistro() {
                                     while [ $estadoContrasenia -eq 255 ]
                                     do
                                         clear
-                                        echo "Ingrese su Contrasenia, (x) para volver"
+                                        echo "Ingrese la Contrasenia, (x) para volver"
                                         read -rp "-> " contrasenia
 
                                         verificarContra_Reg "$contrasenia"
@@ -68,7 +68,7 @@ menuRegistro() {
 
                                             registrar "$usuario" "$contrasenia" "$1" "$cedula" "$telefono" "$fecha"
                                                 echo "Registrado"
-                                            sleep 1
+                                            sleep 2
                                             volver=1
 
                                         elif [ $estadoContrasenia -eq 0 ]
@@ -102,7 +102,7 @@ menuRegistrarMascotas() {
     do
         clear
         estadoTipoMasc=255
-        echo "Ingrese numero Identificador, (x) para volver"
+        echo "Ingrese número Identificador, (x) para volver"
         read -rp "-> " nroId
 
         verificarNroId_Reg "$nroId"
@@ -161,7 +161,7 @@ menuRegistrarMascotas() {
                                             while [ $estadoDescripcion -eq 255 ]
                                             do
                                                 clear
-                                                echo "Ingrese Descripcion de Mascota, (x) para volver"
+                                                echo "Ingrese Descripcion de la mascota, (x) para volver"
                                                 read -rp "-> " descMasc
 
                                                 verificarCadenaTexto "$descMasc"
@@ -171,7 +171,7 @@ menuRegistrarMascotas() {
                                                 then
                                                     regMascota "$nroId" "$tipoMasc" "$nombMasc" "$generoMasc" "$edadMasc" "$descMasc"
                                                     echo "Se registro la mascota"
-                                                    sleep 1
+                                                    sleep 2
                                                     volver=1
                                                 elif [ $estadoDescripcion -eq 0 ]
                                                 then
@@ -221,12 +221,12 @@ verificarEdadMasc_Reg() {
         else
             estado=-1
             echo "La edad debe ser mayor a 1 "
-            sleep 1
+            sleep 2
         fi
     else
         echo "La edad debe contener solo números sin ceros en la izquierda"
         estado=-1
-        sleep 1
+        sleep 3
     fi
 
     return $estado
@@ -251,7 +251,7 @@ verificarGeneroMasc_Reg() {
         else
             echo "opción invalida"
             estado=-1
-            sleep 1
+            sleep 2
         fi
     fi
     return $estado
@@ -276,7 +276,7 @@ verificarCadenaTexto() {
             estado=1
         else
             echo "El dato no debe contener numeros o caracteres especiales"
-            sleep 1
+            sleep 3
             estado=-1
         fi
     fi
@@ -300,7 +300,7 @@ verificarNroId_Reg() {
         then
             estado=-1
             echo " El Id no puede ser 000 "
-            sleep 1
+            sleep 2
         else
             if ! grep -q "^$1-" "./MascotasAdopcion.txt"
             then
@@ -314,7 +314,7 @@ verificarNroId_Reg() {
     else
         echo "Id invalida, tiene que tener largo 3 y debe incluir solo valores númericos. Ej: 001"
         estado=-1
-        sleep 2
+        sleep 3
     fi
     return $estado
 }
@@ -343,14 +343,14 @@ verificarUser_Reg() {
         then
             echo "Usuario inválido, el usuario no debe tener caracter seleccionado"
             estado=-1
-            sleep 2
+            sleep 3
         elif ! grep -q "$1:" "./Users.txt" && ! grep -q "$1:" "./Admins.txt"
         then
             estado=1
         else
             echo "Usuario ya existe"
             estado=-1
-            sleep 1
+            sleep 2
         fi
     fi
     return $estado
@@ -380,7 +380,7 @@ verificarCedula_Reg() {
     else
         echo "Cedula invalida, tiene que tener largo 8 y debe incluir solo valores númericos"
         estado=-1
-        sleep 2
+        sleep 3
     fi
     return $estado
 }
@@ -402,7 +402,7 @@ verificarTel_Reg() {
     else
         echo "Telefono invalido, solo debe incluir valores númericos"
         estado=-1
-        sleep 1
+        sleep 2
     fi
     return $estado
 }
@@ -419,7 +419,7 @@ verificarFecha_Reg() {
         estado=1
     else
         echo "Escribir en formato adecuado dd/mm/yyyy"
-        sleep 1
+        sleep 2
     fi
     return $estado
 }
@@ -434,7 +434,7 @@ verificarContra_Reg() {
     elif [[ "$1" == *":"* ]]
     then
         echo "La contraseña no puede contener :."
-        sleep 1
+        sleep 2
         estado=-1
     fi
     return $estado
@@ -467,7 +467,7 @@ verificarLoggeo() {
             estado=2
         else
             echo "Usuario o Contraseña incorrectos"
-            sleep 1
+            sleep 2
         fi
     fi
     
@@ -545,7 +545,7 @@ mesMasAdoptadas() {
                 mes_mas_frecuente=$mes
             fi
         done
-        echo "El mes mas frecuente es: " "$mes_mas_frecuente"
+        echo "El mes más frecuente es: " "$mes_mas_frecuente"
     fi
     
 }
@@ -579,7 +579,7 @@ promedioTipoNombMascota() {
                 totalAdoptados=$((totalAdoptados + 1 ))
             fi
         done
-        echo "El porcentaje de $tipo adoptados es de: "$((((totalAdoptados * 100) / totalGeneral)))"%"
+        echo "El porcentaje del tipo $tipo adoptados es de: "$((((totalAdoptados * 100) / totalGeneral)))"%"
         totalGeneral=0
         totalAdoptados=0
     done
@@ -597,7 +597,7 @@ promedioEdadMescota() {
             i=$((i + 1))
             sumaEdad=$((sumaEdad + val))
         done
-        echo "Promedio de los animales adoptados: " $((sumaEdad / i))
+        echo "Promedio de la edad de los animales adoptados: " $((sumaEdad / i))
     fi
 }
 
@@ -623,7 +623,7 @@ verificarNoEspacio() {
     if [[ "$1" == *" "* ]] || [[ "$1" == "" ]] 
     then
         echo "Error, la entrada contiene espacios."
-        sleep 1
+        sleep 2
     else
         estado=1
     fi
@@ -773,10 +773,10 @@ adoptarMascota() {
                 sed -i "/^$id/d" "./MascotasAdopcion.txt"
                 echo $lineaAdoptado >> "./MascotasAdoptadas.txt"
                 echo "Adopcion Completada!!"
-                sleep 1
+                sleep 2
             else
                 echo "Mascota no encontrada"
-                sleep 1
+                sleep 2
             fi
         fi
     done
