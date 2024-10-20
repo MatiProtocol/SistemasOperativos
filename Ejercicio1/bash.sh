@@ -57,7 +57,7 @@ menuRegistro() {
                                     while [ $estadoContrasenia -eq 255 ]
                                     do
                                         clear
-                                        echo "Ingrese la Contrasenia, (x) para volver"
+                                        echo "Ingrese la Contraseña, (x) para volver"
                                         read -rp "-> " contrasenia
 
                                         verificarContra_Reg "$contrasenia"
@@ -500,7 +500,7 @@ menuEstadisticas() {
     volver=0
     while [ $volver -eq 0 ]
     do
-        vals=$(awk '{print $1}' "./MascotasAdoptadas.txt")
+        vals=$(awk '{print $1}' "./adopciones.txt")
         if [ ! -z "$vals" ]
         then
             promedioEdadMescota
@@ -524,7 +524,7 @@ menuEstadisticas() {
 }
 
 mesMasAdoptadas() {
-    meses=$(awk -F'/' '{print $2}' "./MascotasAdoptadas.txt")
+    meses=$(awk -F'/' '{print $2}' "./adopciones.txt")
     if [ ! -z "$meses" ]
     then
         declare -A contador_meses
@@ -552,13 +552,11 @@ mesMasAdoptadas() {
 
 promedioTipoNombMascota() {
 
-
-    tiposAdoptados=$(awk -F'-' '{print $2}' "./MascotasAdoptadas.txt")
+    tiposAdoptados=$(awk -F'-' '{print $1}' "./adopciones.txt")
     tiposAdopcion=$(awk -F'-' '{print $2}' "./MascotasAdopcion.txt")
     tipoTotalSinRep=$(echo "$tiposAdoptados"$'\n'"$tiposAdopcion" | sort | uniq)
     tipoTotalConRep=$(echo "$tiposAdoptados"$'\n'"$tiposAdopcion")
-
-
+    
     totalGeneral=0
     totalAdoptados=0
 
@@ -588,7 +586,7 @@ promedioTipoNombMascota() {
 
 promedioEdadMescota() {
     
-    vals=$(awk -F'-' '{print $5}' "./MascotasAdoptadas.txt")
+    vals=$(awk -F'-' '{print $4}' "./adopciones.txt")
     if [ ! -z "$vals" ]
     then
         i=0
@@ -769,9 +767,9 @@ adoptarMascota() {
             if [ ! -z "$linea" ]  
             then
                 fecha=$(date +"%d/%m/%Y")
-                lineaAdoptado=$(echo "$linea" | sed -r "s@[0-9]{2}/[0-9]{2}/[0-9]{4}\$@$fecha@")
+                lineaAdoptado=$( echo "$linea" | awk -F'-' '{print $2"-"$3"-"$4"-"$5"-"$6"-"$7}' )
                 sed -i "/^$id/d" "./MascotasAdopcion.txt"
-                echo $lineaAdoptado >> "./MascotasAdoptadas.txt"
+                echo $lineaAdoptado >> "./adopciones.txt"
                 echo "Adopcion Completada!!"
                 sleep 2
             else
@@ -850,7 +848,7 @@ verificarSisVacio() {
         touch "./Admins.txt"
         touch "./Users.txt"
         touch "./MascotasAdopcion.txt"
-        touch "./MascotasAdoptadas.txt"
+        touch "./adopciones.txt"
 
     fi
     if [ ! -s "./Admins.txt" ]
