@@ -164,7 +164,7 @@ menuRegistrarMascotas() {
                                                 echo "Ingrese Descripcion de la mascota, (x) para volver"
                                                 read -rp "-> " descMasc
 
-                                                verificarCadenaTexto "$descMasc"
+                                                verificarDescripcion_Reg "$descMasc"
                                                 estadoDescripcion=$?
 
                                                 if [ $estadoDescripcion -eq 1 ]
@@ -257,6 +257,21 @@ verificarGeneroMasc_Reg() {
     return $estado
 }
 
+verificarDescripcion_Reg() {
+    estado=-1
+    if [ "$1" = "x" ] || [ "$1" == "X" ]
+    then
+        estado=0
+    elif [[ "$1" != *"-"* ]] && [[ "$1" != *"/"* ]] && [ ! -z "$1" ]
+    then
+        estado=1
+    else
+        echo "El dato no debe contener numeros o caracteres especiales"
+        sleep 3
+        estado=-1
+    fi
+    return $estado
+}
 
 verificarCadenaTexto() {
     estado=-1
@@ -419,7 +434,8 @@ verificarFecha_Reg() {
         estado=1
     else
         echo "Escribir en formato adecuado dd/mm/yyyy"
-        sleep 2
+        echo "La fecha debe estar entre 1950 y 2024"
+        sleep 4
     fi
     return $estado
 }
@@ -428,14 +444,24 @@ verificarContra_Reg() {
     estado=1
     #$1 es la contrasenia
 
+    verificarNoEspacio "$1"
+    noEspacio=$?
+
     if [ "$1" = "x" ] || [ "$1" = "X" ]
     then
         estado=0
-    elif [[ "$1" == *":"* ]]
-    then
-        echo "La contraseña no puede contener :."
-        sleep 2
-        estado=-1
+    else
+        if [ $noEspacio -eq -1 ] 
+        then
+            if [[ "$1" == *":"* ]]
+            then
+                echo "La contraseña no puede contener :."
+                sleep 2
+                estado=-1
+            else
+                estado=1
+            fi
+        fi
     fi
     return $estado
 }
@@ -640,9 +666,6 @@ menuIniSesion() {
         verificarNoEspacio "$usuario"
         noEspacio=$?
         
-        
-        
-
         if [ $noEspacio -eq 1 ] 
         then
             if [ "$usuario" == "x" ] || [ "$usuario" == "X" ]
