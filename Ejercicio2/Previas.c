@@ -1,7 +1,7 @@
 #include <pthread.h>
-#include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <semaphore.h>
 
 sem_t semIP, semM1, semF1, semED, semM2, semF2, semPA, semBD, semBigD, semRO, semRC, semSO, semIS, semSI, semIA, semCG, semDW, semSD, semCS, semAA;
 
@@ -16,37 +16,38 @@ void *M1(void * x) {
 }
 
 void *F1(void * x) {
-    sem_post(&semF2);
     printf("Física I\n");
+    sem_post(&semF2);
 }
 
 void *ED(void * x) {
     sem_wait(&semIP);
+    printf("Estructuras de Datos\n");
     sem_post(&semPA);
     sem_post(&semBD);
-    printf("Estructuras de Datos\n");
 }   
 
 void *M2(void * x) {
     sem_wait(&semM1);
+    printf("Matemáticas II\n");
     sem_post(&semPA);
     sem_post(&semAA);
     sem_post(&semBigD);
     sem_post(&semIA);
-    printf("Matemáticas II\n");
 }
 
 void *F2(void * x) {
     sem_wait(&semF1);
+    printf("Física II\n");
     sem_post(&semCG);
     sem_post(&semRC);
     sem_post(&semRO);
-    printf("Física II\n");
 }
 
 void *PA(void * x) {
     sem_wait(&semED);
     sem_wait(&semM2);
+    printf("Programación Avanzada\n");
     sem_post(&semIS);
     sem_post(&semIA);
     sem_post(&semAA);
@@ -54,33 +55,31 @@ void *PA(void * x) {
     sem_post(&semCG);
     sem_post(&semRC);
     sem_post(&semSO);
-    printf("Programación Avanzada\n");
 }
 
 void *BD(void * x) {
     sem_wait(&semED);
+    printf("Bases de Datos\n");
     sem_post(&semBigD);
     sem_post(&semSI);
     sem_post(&semDW);
-
-    printf("Bases de Datos\n");
 }
 
 void *RC(void * x) {
     sem_wait(&semF2);
     sem_wait(&semPA);
+    printf("Redes de Computadoras\n");
     sem_post(&semSO);
     sem_post(&semSD);
     sem_post(&semDW);
-    printf("Redes de Computadoras\n");
 }
 
 void *SO(void * x) {
     sem_wait(&semPA);
     sem_wait(&semRC);
+    printf("Sistemas Operativos\n");
     sem_post(&semSD);
     sem_post(&semCS);
-    printf("Sistemas Operativos\n");
 }
 
 void *IS(void * x) {
@@ -90,8 +89,8 @@ void *IS(void * x) {
 
 void *SI(void * x) {
     sem_wait(&semBD);
-    sem_post(&semCS);
     printf("Seguridad Informática\n");
+    sem_post(&semCS);
 }
 
 void *IA(void * x) {
@@ -103,49 +102,42 @@ void *IA(void * x) {
 void *CG(void * x) {
     sem_wait(&semPA);
     sem_wait(&semF2);
-    
     printf("Computación Gráfica\n");
 }
 
 void *DW(void * x) {
     sem_wait(&semBD);
     sem_wait(&semRC);
-    
     printf("Desarrollo Web\n");
 }
 
 void *SD(void * x) {
     sem_wait(&semSO);
     sem_wait(&semRC);
-    
     printf("Sistemas Distribuidos\n");
 }
 
 void *BigD(void * x) {
     sem_wait(&semM2);
     sem_wait(&semBD);
-
     printf("Big Data\n");
 }
 
 void *RO(void * x) {
     sem_wait(&semF2);
     sem_wait(&semPA);
-
     printf("Robótica\n");
 }
 
 void *CS(void * x) {
     sem_wait(&semSO);
     sem_wait(&semSI);
-    
     printf("Ciberseguridad\n");
 }
 
 void *AA(void * x) {
     sem_wait(&semPA);
     sem_wait(&semM2);
-
     printf("Análisis de Algoritmos\n");
 }
 
