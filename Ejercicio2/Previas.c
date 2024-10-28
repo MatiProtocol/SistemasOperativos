@@ -143,6 +143,10 @@ void *AA(void * x) {
 
 int main() {
 
+    pthread_t hiloIP, hiloM1, hiloF1, hiloED, hiloM2, hiloF2, hiloPA, hiloBD, hiloBigD, hiloRO, hiloRC, hiloSO, hiloIS, hiloSI, hiloIA, hiloCG, hiloDW, hiloSD, hiloCS, hiloAA;
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
+
     sem_init(&semIP, 0, 1);
     sem_init(&semM1, 0, 1);
     sem_init(&semF1, 0, 1);
@@ -163,10 +167,6 @@ int main() {
     sem_init(&semSD, 0, 0);
     sem_init(&semCS, 0, 0);
     sem_init(&semAA, 0, 0);
-
-    pthread_t hiloIP, hiloM1, hiloF1, hiloED, hiloM2, hiloF2, hiloPA, hiloBD, hiloBigD, hiloRO, hiloRC, hiloSO, hiloIS, hiloSI, hiloIA, hiloCG, hiloDW, hiloSD, hiloCS, hiloAA;
-    pthread_attr_t attr;
-    pthread_attr_init(&attr);
 
     pthread_create(&hiloIP, &attr, IP, NULL);
     pthread_create(&hiloM1, &attr, M1, NULL);
@@ -234,4 +234,3 @@ int main() {
     return 0;
 
 }
-//gcc -pthread -o lab6 lab6.c
