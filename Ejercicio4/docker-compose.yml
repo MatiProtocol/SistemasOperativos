@@ -1,0 +1,14 @@
+services:
+  sqlserver:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    container_name: sql_serve
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=1234
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+
+volumes:
+  sql_data:
