@@ -3,141 +3,141 @@
 #include <stdlib.h>
 #include <semaphore.h>
 
-sem_t semIP, semM1, semF1, semED, semM2, semF2, semPA, semBD, semBigD, semRO, semRC, semSO, semIS, semSI, semIA, semCG, semDW, semSD, semCS, semAA;
+sem_t semIP_ED, semM1_M2, semF1_F2, semED_BD, semED_PA, semM2_PA, semM2_IA, semM2_AA, semM2_BigD, semF2_RC, semF2_CG, semF2_RO, semPA_IA, semPA_RC, semPA_SO, semPA_IS, semPA_RO, semPA_CG, semPA_AA, semBD_SI, semBD_DW, semBD_BigD, semRC_SD, semRC_SO, semRC_DW, semRC_SI, semSO_SD, semSO_CS, semSI_CS;
 
 void *IP(void * x) {
-    sem_post(&semED);
     printf("Introducción a la Programacion\n");
+    sem_post(&semIP_ED);
 }
 
 void *M1(void * x) {
-    sem_post(&semM2);
     printf("Matematica I\n");
+    sem_post(&semM1_M2);
 }
 
 void *F1(void * x) {
     printf("Física I\n");
-    sem_post(&semF2);
+    sem_post(&semF1_F2);
 }
 
 void *ED(void * x) {
-    sem_wait(&semIP);
+    sem_wait(&semIP_ED);
     printf("Estructuras de Datos\n");
-    sem_post(&semPA);
-    sem_post(&semBD);
+    sem_post(&semED_PA);
+    sem_post(&semED_BD);
 }   
 
 void *M2(void * x) {
-    sem_wait(&semM1);
+    sem_wait(&semM1_M2);
     printf("Matemáticas II\n");
-    sem_post(&semPA);
-    sem_post(&semAA);
-    sem_post(&semBigD);
-    sem_post(&semIA);
+    sem_post(&semM2_PA);
+    sem_post(&semM2_AA);
+    sem_post(&semM2_BigD);
+    sem_post(&semM2_IA);
 }
 
 void *F2(void * x) {
-    sem_wait(&semF1);
+    sem_wait(&semF1_F2);
     printf("Física II\n");
-    sem_post(&semCG);
-    sem_post(&semRC);
-    sem_post(&semRO);
+    sem_post(&semF2_CG);
+    sem_post(&semF2_RC);
+    sem_post(&semF2_RO);
 }
 
 void *PA(void * x) {
-    sem_wait(&semED);
-    sem_wait(&semM2);
+    sem_wait(&semED_PA);
+    sem_wait(&semM2_PA);
     printf("Programación Avanzada\n");
-    sem_post(&semIS);
-    sem_post(&semIA);
-    sem_post(&semAA);
-    sem_post(&semRO);
-    sem_post(&semCG);
-    sem_post(&semRC);
-    sem_post(&semSO);
+    sem_post(&semPA_IS);
+    sem_post(&semPA_IA);
+    sem_post(&semPA_AA);
+    sem_post(&semPA_RO);
+    sem_post(&semPA_CG);
+    sem_post(&semPA_RC);
+    sem_post(&semPA_SO);
 }
 
 void *BD(void * x) {
-    sem_wait(&semED);
+    sem_wait(&semED_BD);
     printf("Bases de Datos\n");
-    sem_post(&semBigD);
-    sem_post(&semSI);
-    sem_post(&semDW);
+    sem_post(&semBD_BigD);
+    sem_post(&semBD_SI);
+    sem_post(&semBD_DW);
 }
 
 void *RC(void * x) {
-    sem_wait(&semF2);
-    sem_wait(&semPA);
+    sem_wait(&semF2_RC);
+    sem_wait(&semPA_RC);
     printf("Redes de Computadoras\n");
-    sem_post(&semSO);
-    sem_post(&semSD);
-    sem_post(&semDW);
+    sem_post(&semRC_SO);
+    sem_post(&semRC_SD);
+    sem_post(&semRC_DW);
 }
 
 void *SO(void * x) {
-    sem_wait(&semPA);
-    sem_wait(&semRC);
+    sem_wait(&semPA_SO);
+    sem_wait(&semRC_SO);
     printf("Sistemas Operativos\n");
-    sem_post(&semSD);
-    sem_post(&semCS);
+    sem_post(&semSO_SD);
+    sem_post(&semSO_CS);
 }
 
 void *IS(void * x) {
-    sem_wait(&semPA);
+    sem_wait(&semPA_IS);
     printf("Ingeniería de Software\n");
 }
 
 void *SI(void * x) {
-    sem_wait(&semBD);
+    sem_wait(&semBD_SI);
     printf("Seguridad Informática\n");
-    sem_post(&semCS);
+    sem_post(&semSI_CS);
 }
 
 void *IA(void * x) {
-    sem_wait(&semM2);
-    sem_wait(&semPA);
+    sem_wait(&semM2_IA);
+    sem_wait(&semPA_IA);
     printf("Inteligencia Artificial\n");
 }
 
 void *CG(void * x) {
-    sem_wait(&semPA);
-    sem_wait(&semF2);
+    sem_wait(&semPA_CG);
+    sem_wait(&semF2_CG);
     printf("Computación Gráfica\n");
 }
 
 void *DW(void * x) {
-    sem_wait(&semBD);
-    sem_wait(&semRC);
+    sem_wait(&semBD_DW);
+    sem_wait(&semRC_DW);
     printf("Desarrollo Web\n");
 }
 
 void *SD(void * x) {
-    sem_wait(&semSO);
-    sem_wait(&semRC);
+    sem_wait(&semSO_SD);
+    sem_wait(&semRC_SD);
     printf("Sistemas Distribuidos\n");
 }
 
 void *BigD(void * x) {
-    sem_wait(&semM2);
-    sem_wait(&semBD);
+    sem_wait(&semM2_BigD);
+    sem_wait(&semBD_BigD);
     printf("Big Data\n");
 }
 
 void *RO(void * x) {
-    sem_wait(&semF2);
-    sem_wait(&semPA);
+    sem_wait(&semF2_RO);
+    sem_wait(&semPA_RO);
     printf("Robótica\n");
 }
 
 void *CS(void * x) {
-    sem_wait(&semSO);
-    sem_wait(&semSI);
+    sem_wait(&semSO_CS);
+    sem_wait(&semSI_CS);
     printf("Ciberseguridad\n");
 }
 
 void *AA(void * x) {
-    sem_wait(&semPA);
-    sem_wait(&semM2);
+    sem_wait(&semPA_AA);
+    sem_wait(&semM2_AA);
     printf("Análisis de Algoritmos\n");
 }
 
@@ -147,26 +147,35 @@ int main() {
     pthread_attr_t attr;
     pthread_attr_init(&attr);
 
-    sem_init(&semIP, 0, 1);
-    sem_init(&semM1, 0, 1);
-    sem_init(&semF1, 0, 1);
-    sem_init(&semED, 0, 0);
-    sem_init(&semM2, 0, 0);
-    sem_init(&semF2, 0, 0);
-    sem_init(&semPA, 0, 0);
-    sem_init(&semBD, 0, 0);
-    sem_init(&semBigD, 0, 0);
-    sem_init(&semRO, 0, 0);
-    sem_init(&semRC, 0, 0);
-    sem_init(&semSO, 0, 0);
-    sem_init(&semIS, 0, 0);
-    sem_init(&semSI, 0, 0);
-    sem_init(&semIA, 0, 0);
-    sem_init(&semCG, 0, 0);
-    sem_init(&semDW, 0, 0);
-    sem_init(&semSD, 0, 0);
-    sem_init(&semCS, 0, 0);
-    sem_init(&semAA, 0, 0);
+    sem_init(&semIP_ED, 0, 0);
+    sem_init(&semM1_M2, 0, 0);
+    sem_init(&semF1_F2, 0, 0);
+    sem_init(&semED_BD, 0, 0);
+    sem_init(&semED_PA, 0, 0);
+    sem_init(&semM2_PA, 0, 0);
+    sem_init(&semM2_IA, 0, 0);
+    sem_init(&semM2_AA, 0, 0);
+    sem_init(&semM2_BigD, 0, 0);
+    sem_init(&semF2_RC, 0, 0);
+    sem_init(&semF2_CG, 0, 0);
+    sem_init(&semF2_RO, 0, 0);
+    sem_init(&semPA_IA, 0, 0);
+    sem_init(&semPA_RC, 0, 0);
+    sem_init(&semPA_SO, 0, 0);
+    sem_init(&semPA_IS, 0, 0);
+    sem_init(&semPA_RO, 0, 0);
+    sem_init(&semPA_CG, 0, 0);
+    sem_init(&semPA_AA, 0, 0);
+    sem_init(&semBD_SI, 0, 0);
+    sem_init(&semBD_DW, 0, 0);
+    sem_init(&semBD_BigD, 0, 0);
+    sem_init(&semRC_SD, 0, 0);
+    sem_init(&semRC_SO, 0, 0);
+    sem_init(&semRC_DW, 0, 0);
+    sem_init(&semSO_SD, 0, 0);
+    sem_init(&semSO_CS, 0, 0);
+    sem_init(&semSI_CS, 0, 0);
+
 
     pthread_create(&hiloIP, &attr, IP, NULL);
     pthread_create(&hiloM1, &attr, M1, NULL);
@@ -210,26 +219,35 @@ int main() {
     pthread_join(hiloCS, NULL);
     pthread_join(hiloAA, NULL);
 
-    sem_destroy(&semIP);
-    sem_destroy(&semM1);
-    sem_destroy(&semF1);
-    sem_destroy(&semED);
-    sem_destroy(&semM2);
-    sem_destroy(&semF2);
-    sem_destroy(&semPA);
-    sem_destroy(&semBD);
-    sem_destroy(&semBigD);
-    sem_destroy(&semRO);
-    sem_destroy(&semRC);
-    sem_destroy(&semSO);
-    sem_destroy(&semIS);
-    sem_destroy(&semSI);
-    sem_destroy(&semIA);
-    sem_destroy(&semCG);
-    sem_destroy(&semDW);
-    sem_destroy(&semSD);
-    sem_destroy(&semCS);
-    sem_destroy(&semAA);
+    sem_destroy(&semIP_ED); 
+    sem_destroy(&semM1_M2); 
+    sem_destroy(&semF1_F2);
+    sem_destroy(&semED_BD); 
+    sem_destroy(&semED_PA); 
+    sem_destroy(&semM2_PA); 
+    sem_destroy(&semM2_IA); 
+    sem_destroy(&semM2_AA); 
+    sem_destroy(&semM2_BigD); 
+    sem_destroy(&semF2_RC); 
+    sem_destroy(&semF2_CG); 
+    sem_destroy(&semF2_RO); 
+    sem_destroy(&semPA_IA); 
+    sem_destroy(&semPA_RC); 
+    sem_destroy(&semPA_SO);
+    sem_destroy(&semPA_IS);
+    sem_destroy(&semPA_RO); 
+    sem_destroy(&semPA_CG); 
+    sem_destroy(&semPA_AA); 
+    sem_destroy(&semBD_SI); 
+    sem_destroy(&semBD_DW); 
+    sem_destroy(&semBD_BigD); 
+    sem_destroy(&semRC_SD); 
+    sem_destroy(&semRC_SO); 
+    sem_destroy(&semRC_DW); 
+    sem_destroy(&semRC_SI);
+    sem_destroy(&semSO_SD); 
+    sem_destroy(&semSO_CS);
+    sem_destroy(&semSI_CS);
 
     return 0;
 
