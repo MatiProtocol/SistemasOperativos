@@ -1,0 +1,22 @@
+[GENERATED OBJECT FILE]
+b__main.o
+[PROJECT FILES]
+C:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\SistemasOperativos\Ejercicio3\lmc.gpr
+20241125141908 0ccaaff6bf37cb93aa8f70227ac7e1ef
+[BOUND OBJECT FILES]
+C:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\SistemasOperativos\Ejercicio3\obj\main.o
+[GENERATED SOURCE FILES]
+b__main.ads
+b__main.adb
+b__main.ali
+[RESULTING OPTIONS]
+-LC:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\SistemasOperativos\Ejercicio3\obj\
+-LC:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\SistemasOperativos\Ejercicio3\obj\
+-LC:/gnat/2021/lib/gcc/x86_64-w64-mingw32/10.3.1/adalib/
+-static
+-static-libgcc
+C:/gnat/2021/lib/gcc/x86_64-w64-mingw32/10.3.1/adalib/libgnarl.a
+C:/gnat/2021/lib/gcc/x86_64-w64-mingw32/10.3.1/adalib/libgnat.a
+-Xlinker
+--stack=0x200000,0x1000
+-mthreads
