@@ -1,0 +1,10 @@
+services: 
+	code-server:
+    build: .
+    ports:
+      - "8080:8080"
+	volumes:
+		-./data:/home/codes/project
+	environment:
+		-password= 123456
+ 
