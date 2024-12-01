@@ -1,10 +1,13 @@
-services: 
-	code-server:
+services:
+  vscode:
     build: .
+    container_name: vscodes
     ports:
-      - "8080:8080"
-	volumes:
-		-./data:/home/codes/project
-	environment:
-		-password= 123456
- 
+      - "8080:8080"  
+    volumes:
+      - vsCode:/home/visuals
+    environment:
+      - PASSWORD=1234
+
+volumes:
+  vsCode:

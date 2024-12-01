@@ -1,0 +1,23 @@
+$ docker-compose up --build -d
+[+] Building 63.5s (12/12) FINISHED                                                                                                                                           docker:desktop-linux
+ => [vscode internal] load build definition from dockerfile                                                                                                                                   0.0s
+ => => transferring dockerfile: 310B                                                                                                                                                          0.0s
+ => [vscode internal] load metadata for docker.io/library/ubuntu:latest                                                                                                                       1.6s
+ => [vscode auth] library/ubuntu:pull token for registry-1.docker.io                                                                                                                          0.0s
+ => [vscode internal] load .dockerignore                                                                                                                                                      0.0s
+ => => transferring context: 2B                                                                                                                                                               0.0s
+ => CACHED [vscode 1/6] FROM docker.io/library/ubuntu:latest@sha256:278628f08d4979fb9af9ead44277dbc9c92c2465922310916ad0c46ec9999295                                                          0.0s
+ => [vscode 2/6] RUN apt-get update                                                                                                                                                          12.0s
+ => [vscode 3/6] RUN apt-get install -y curl                                                                                                                                                 17.4s
+ => [vscode 4/6] RUN apt-get install -y sudo                                                                                                                                                  4.0s
+ => [vscode 5/6] RUN apt-get clean                                                                                                                                                            0.5s
+ => [vscode 6/6] RUN curl -fsSL https://code-server.dev/install.sh | sh                                                                                                                      25.8s
+ => [vscode] exporting to image                                                                                                                                                               2.0s
+ => => exporting layers                                                                                                                                                                       2.0s
+ => => writing image sha256:6cf9354def436ab7f53badfdd0f8c8009abc75e12e8bf95f6b7be46ffe458580                                                                                                  0.0s
+ => => naming to docker.io/library/parte41-vscode                                                                                                                                             0.0s
+ => [vscode] resolving provenance for metadata file                                                                                                                                           0.0s
+[+] Running 3/3
+ ✔ Network parte41_default  Created                                                                                                                                                           0.1s 
+ ✔ Volume "parte41_vsCode"  Created                                                                                                                                                           0.0s 
+ ✔ Container vscodes        Started  
