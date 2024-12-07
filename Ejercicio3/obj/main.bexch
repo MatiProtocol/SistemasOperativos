@@ -1,17 +1,17 @@
 [GENERATED OBJECT FILE]
 b__main.o
 [PROJECT FILES]
-C:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\SistemasOperativos\Ejercicio3\lmc.gpr
-20241125141908 0ccaaff6bf37cb93aa8f70227ac7e1ef
+C:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\Obligatorio_SistemasOperativos\SistemasOperativos\Ejercicio3\default.gpr
+20241207153010 937ade9d92c2799ac31aec0239644c4a
 [BOUND OBJECT FILES]
-C:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\SistemasOperativos\Ejercicio3\obj\main.o
+C:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\Obligatorio_SistemasOperativos\SistemasOperativos\Ejercicio3\obj\main.o
 [GENERATED SOURCE FILES]
 b__main.ads
 b__main.adb
 b__main.ali
 [RESULTING OPTIONS]
--LC:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\SistemasOperativos\Ejercicio3\obj\
--LC:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\SistemasOperativos\Ejercicio3\obj\
+-LC:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\Obligatorio_SistemasOperativos\SistemasOperativos\Ejercicio3\obj\
+-LC:\Users\matib\Desktop\Semestre 4\Sistemas Operativos\Obligatorio_SistemasOperativos\SistemasOperativos\Ejercicio3\obj\
 -LC:/gnat/2021/lib/gcc/x86_64-w64-mingw32/10.3.1/adalib/
 -static
 -static-libgcc
