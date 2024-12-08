@@ -15,3 +15,7 @@ Se agrega al zip de resultado un archivo de texto llamado "main.txt" por si acas
 ### DECLARACIÓN DE AUTORÍA
 
 El ejercicio se llevó a cabo contando con la letra del mismo, la guía subida en el teams del grupo, el template del ejercicio también subido al teams del grupo y con la herramienta de Inteligencia Artificial Generativa.   
+Referencias:
+- [Learn Adacore](https://learn.adacore.com/index.html)
+- [Little Man Computer: 1. Introduction](https://www.youtube.com/watch?v=9AWN_ntHfPk)
+- [Petter Higginson](https://peterhigginson.co.uk/lmc/help.html)
